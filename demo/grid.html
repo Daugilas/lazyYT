@@ -78,7 +78,12 @@
                 <div class="js-lazyYT" data-youtube-id="gQEyezu7G20" data-display-duration="true"></div>
               </div>
               <div class="item even">
-                <div class="js-lazyYT" data-youtube-id="nwN6dPNXklg"></div>
+                <div class="js-lazyYT" data-youtube-id="nwN6dPNXklg" data-hells-club-another-night-id="AW9UJ0zh7cA"></div>
+              </div>
+              
+              <div class="item even">
+                <button id="play">Click to Play Video</button>
+                <button id="pause">Click to Pause Video</button>
               </div>
               
               <div style="color: #eee; text-align: center;">Just take a look how fast they all load!</div>
@@ -96,11 +101,12 @@
         };
         
         $( document ).ready(function() {
-            $('.item.odd .js-lazyYT').lazyYT('AIzaSyCawA87g_pgTbSNPhiWAemy-mFKszJGl4M');
+            $('.item.odd .js-lazyYT').lazyYT('AIzaSyAbhLUUKnoM4fvP1fbKroCEdM6n8V3Yhi4');
             
             // Pass some parameters
-            $('.item.even .js-lazyYT').lazyYT('AIzaSyCawA87g_pgTbSNPhiWAemy-mFKszJGl4M', {
+            $('.item.even .js-lazyYT').lazyYT('AIzaSyAbhLUUKnoM4fvP1fbKroCEdM6n8V3Yhi4', {
               loading_text: 'It is loading!...',
+              display_title: true,
               display_duration: true,
               youtube_parameters: 'rel=1',
               default_ratio: '16:9',

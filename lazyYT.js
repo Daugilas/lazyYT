@@ -121,9 +121,40 @@
         
         $thumb = $el.find('.ytp-thumbnail').on('click', function (e) {
             e.preventDefault();
-            if (!$el.hasClass('lazyYT-video-loaded')) {
-                $el.html('<iframe src="//www.youtube.com/embed/' + id + '?' + youtube_parameters + '&autoplay=1" frameborder="0" allowfullscreen></iframe>')
+            if (!$el.hasClass(settings.video_loaded_class)) {
+                // if (settings.mobile_device)
+                // $el.html('<iframe src="//www.youtube.com/embed/' + id + '?' + youtube_parameters + '&autoplay=1" frameborder="0" allowfullscreen></iframe>')
+                $el.html(['<iframe id="iframe_', id, '" src="//www.youtube.com/embed/', id, '?', youtube_parameters, (settings.mobile_device)?'&enablejsapi=1':'', '&autoplay=1" frameborder="0" allowfullscreen></iframe>'].join(''))
                     .addClass(settings.video_loaded_class);
+                
+                if (settings.mobile_device) {
+                    $.getScript("//www.youtube.com/player_api", function() {
+                        var yt_int = setInterval(function(){
+                            if(typeof YT === "object"){
+                                var yt_player = new YT.Player('iframe_'+id);
+                                window.yt_player = yt_player;
+                                clearInterval(yt_int);
+                                
+                                var yt_int2 = setInterval(function(){
+                                  if(typeof yt_player.playVideo === "function"){
+                                    yt_player.playVideo();
+                                    clearInterval(yt_int2);
+                                  }
+                                }, 500);
+                                
+                            }
+                        },500);
+                    });
+                }
+                
+                                $('#play').on('click', function(){
+                                  yt_player.playVideo();
+                                });
+                        
+                                $('#pause').on('click', function(){
+                                  yt_player.pauseVideo();
+                                });
+                                
 
                 // execute callback
                 if (typeof settings.callback == 'function') { // make sure the callback is a function
@@ -297,7 +328,10 @@
             video_loaded_class: 'lazyYT-video-loaded',
             container_class: 'lazyYT-container'
         };
+        
         var settings = $.extend(defaultSettings, newSettings);
+        settings.mobile_device = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+        settings.mobile_device = true;
         
         return this.each(function () {
             var $el = $(this).addClass(settings.container_class);
@@ -306,3 +340,14 @@
     };
 
 }(jQuery));
+
+function dar() {
+  console.log('Prad=ia');
+  
+  $('.lazyYT-video-loaded').click();
+  
+  console.log();
+  console.log();
+  console.log();
+  console.log('Pabaigas');
+}
